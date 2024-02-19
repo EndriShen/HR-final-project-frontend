@@ -1,0 +1,44 @@
+<header>
+    <h1>Welcome to HR Solutions!</h1>
+  </header>
+  
+  <div class="signup-container">
+    
+    <h2>Sign up</h2>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" formControlName="firstName" />
+        <div *ngIf="signupForm.get('firstName')?.hasError('required') && signupForm.controls['firstName'].touched" class="error">First Name is required.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">First Name:</label>
+        <input type="text" id="lastName" formControlName="lastName" />
+        <div *ngIf="signupForm.get('lastName')?.hasError('required') && signupForm.controls['lastName'].touched" class="error">Last Name is required.</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="username">First Name:</label>
+        <input type="text" id="username" formControlName="username" />
+        <div *ngIf="signupForm.get('username')?.hasError('required') && signupForm.controls['username'].touched" class="error">Username is required.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password" />
+        <div *ngIf="signupForm.get('password')?.hasError('required') && signupForm.controls['password'].touched" class="error">Password is required.</div>
+        <div *ngIf="signupForm.get('password')?.hasError('minlength')" class="error">Password must be at least 6 characters.</div>
+      </div>
+  
+      <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+      
+      <div class="switch-form">
+        <span>Already have an account? </span>
+        <a routerLink="/login">Log In here</a>
+      </div>
+
+    </form>
+  </div>
+  

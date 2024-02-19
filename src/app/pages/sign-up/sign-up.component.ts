@@ -4,26 +4,25 @@ import { Router } from '@angular/router';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss']
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss']
 })
-export class LogInComponent implements OnInit {
-
-  loginForm!: FormGroup;
-  loginFailed: boolean = false;
-
+export class SignUpComponent implements OnInit{
+  signupForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthServiceService) {}
-
+  
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
+    this.signupForm = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   onSubmit() {
-  
+    
   }
 }
