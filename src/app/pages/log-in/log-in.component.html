@@ -1,0 +1,24 @@
+<div class="login-container">
+    <h2>Login</h2>
+    <form [formGroup]="loginForm">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="username" id="username" formControlName="username"/>
+        <div *ngIf="loginForm.get('username')?.hasError('required') && loginForm.controls['username'].touched" class="error">
+        Email is required.</div>
+      </div>
+  
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password"/>
+        <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.controls['password'].touched" class="error">
+        Password is required.</div>
+      </div>
+  
+      <button type="submit" [disabled]="!loginForm.valid">Login</button>
+
+      <div *ngIf="loginFailed" class="error">
+        Incorrect email or password. Please try again or Sign Up if you don't have an account.
+      </div>
+    </form>
+  </div>
