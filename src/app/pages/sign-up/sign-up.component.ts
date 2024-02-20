@@ -23,6 +23,15 @@ export class SignUpComponent implements OnInit{
   }
 
   onSubmit() {
-    
+    if (this.signupForm.valid) {
+      const userData = this.signupForm.value;
+      this.authService.createUser(userData).subscribe({
+        next: () => {
+          console.log('Signup successful');
+          this.router.navigate(['/login']);
+        },
+        error: (error) => console.error('Error during signup:', error)
+      });
+    }
   }
 }

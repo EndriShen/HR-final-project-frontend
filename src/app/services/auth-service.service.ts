@@ -8,7 +8,7 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthServiceService {
 
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
@@ -18,11 +18,13 @@ export class AuthServiceService {
   }
 
   login(username: string, password: string): Observable<User> {
-    const url = `${this.baseUrl}/user/login?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+    const url = `${this.baseUrl}/user/login?username=${username}&password=${password}`;
     return this.http.get<User>(url).pipe(
       tap(user => {
         if (user) { // Check if user is not null or undefined
           localStorage.setItem('currentUser', JSON.stringify(user));
+        } else {
+          console.log('User is null or undefined')
         }
       })
     );

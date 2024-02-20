@@ -14,13 +14,13 @@
       </div>
 
       <div class="form-group">
-        <label for="lastName">First Name:</label>
+        <label for="lastName">Last Name:</label>
         <input type="text" id="lastName" formControlName="lastName" />
         <div *ngIf="signupForm.get('lastName')?.hasError('required') && signupForm.controls['lastName'].touched" class="error">Last Name is required.</div>
       </div>
   
       <div class="form-group">
-        <label for="username">First Name:</label>
+        <label for="username">Username:</label>
         <input type="text" id="username" formControlName="username" />
         <div *ngIf="signupForm.get('username')?.hasError('required') && signupForm.controls['username'].touched" class="error">Username is required.</div>
       </div>

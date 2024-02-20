@@ -1,1 +1,4 @@
 <p>manager-edit-view works!</p>
+<ng-container *ngIf="authService.isLoggedIn()">
+    <button class="logout-button" (click)="logout()">Log Out</button>
+  </ng-container>

@@ -30,7 +30,19 @@ export class LogInComponent implements OnInit {
       this.authService.login(username, password).pipe(
         tap(user => {
           if (user) {
-            this.router.navigate(['/main']);
+            // Save user data to local storage
+            //localStorage.setItem('currentUser', JSON.stringify(user));
+  
+            // Redirect based on user's role
+            const userRole = user.role;
+            if (userRole === 'USER') {
+              this.router.navigate(['/user-view']);
+            } else if (userRole === 'MANAGER') {
+              this.router.navigate(['/manager-list']);
+            } else {
+              // Handle unknown role
+              console.error('Unknown role:', userRole);
+            }
           } else {
             this.loginFailed = true;
           }

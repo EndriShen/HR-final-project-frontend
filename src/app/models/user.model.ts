@@ -4,7 +4,7 @@ export class User {
     lastName?: string;
     username?: string;
     password?: string;
-    role?: 'USER' | 'ADMIN';
+    role?: 'USER' | 'MANAGER';
     daysOff?: number;
     createdAt?: string;
     createdBy?: string;

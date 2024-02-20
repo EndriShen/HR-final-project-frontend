@@ -12,6 +12,8 @@ import { UserRequestInterceptor } from './interceptors/user-request.interceptor'
 import { MainViewComponent } from './pages/main-view/main-view.component';
 import { ManagerListViewComponent } from './pages/main-view/manager-list-view/manager-list-view.component';
 import { ManagerEditViewComponent } from './pages/main-view/manager-edit-view/manager-edit-view.component';
+import { HeaderComponent } from './pages/main-view/header/header.component';
+import { FooterComponent } from './pages/main-view/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { ManagerEditViewComponent } from './pages/main-view/manager-edit-view/ma
     MainViewComponent,
     ManagerListViewComponent,
     ManagerEditViewComponent,
+    HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

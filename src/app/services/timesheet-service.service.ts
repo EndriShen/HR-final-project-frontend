@@ -11,7 +11,7 @@ import { UpdateTimesheetManager } from '../models/updateTimesheetManager.model';
 })
 export class TimesheetServiceService {
 
-  private baseUrl = 'http://localhost:8080/timesheet'; // Adjust with your backend URL
+  private baseUrl = 'http://localhost:8080/api/timesheet'; 
 
   constructor(private http: HttpClient) { }
 
