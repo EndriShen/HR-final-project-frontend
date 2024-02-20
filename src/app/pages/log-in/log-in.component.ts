@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, of, tap } from 'rxjs';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
@@ -23,7 +24,23 @@ export class LogInComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-  
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const { username, password } = this.loginForm.value;
+      this.authService.login(username, password).pipe(
+        tap(user => {
+          if (user) {
+            this.router.navigate(['/main']);
+          } else {
+            this.loginFailed = true;
+          }
+        }),
+        catchError((error) => {
+          console.error('Error during login:', error);
+          this.loginFailed = true;
+          return of(null);
+        })
+      ).subscribe();
+    }
   }
 }
