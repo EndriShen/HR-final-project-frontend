@@ -12,8 +12,8 @@ export class UserServiceService {
 
   constructor(private http: HttpClient) { }
 
-  updateUser(id: number, user: UpdateUserRequest): Observable<User> {
-    return this.http.patch<User>(`${this.baseUrl}/update/${id}`, user).pipe(
+  updateUser(userId: number, managerId: number, user: UpdateUserRequest): Observable<any> {
+    return this.http.patch<any>(`${this.baseUrl}/update/${userId}/${managerId}`, user).pipe(
       catchError((error) => of(error))
     );
   }
