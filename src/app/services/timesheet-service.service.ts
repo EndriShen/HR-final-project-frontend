@@ -5,6 +5,7 @@ import { Timesheet } from '../models/timesheet.model';
 import { Observable, catchError, of } from 'rxjs';
 import { UpdateTimesheetUser } from '../models/updateTimesheetUser.model';
 import { UpdateTimesheetManager } from '../models/updateTimesheetManager.model';
+import { TimesheetResponse } from '../models/timesheetResponse.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class TimesheetServiceService {
 
   constructor(private http: HttpClient) { }
 
-  createTimesheet(timesheetRequest: SaveTimesheetRequest): Observable<Timesheet> {
-    return this.http.post<Timesheet>(`${this.baseUrl}/create`, timesheetRequest);
+  createTimesheet(timesheetRequest: SaveTimesheetRequest): Observable<TimesheetResponse> {
+    return this.http.post<TimesheetResponse>(`${this.baseUrl}/create`, timesheetRequest);
   }
 
   updateTimesheetUser(id: number, timesheet: UpdateTimesheetUser): Observable<Timesheet> {
@@ -37,5 +38,9 @@ export class TimesheetServiceService {
 
   getTimeSheetsByUserId(userId: number): Observable<Timesheet[]> {
     return this.http.get<Timesheet[]>(`${this.baseUrl}/user/${userId}`);
+  }
+
+  getAllTimesheets(): Observable<Timesheet[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/all-timesheets`);
   }
 }

@@ -1,4 +1,6 @@
 .user-view {
+    margin-top: 40px;
+    margin-bottom: 50px;
     display: flex;
     justify-content: space-between;
     padding: 20px;
@@ -14,6 +16,10 @@
   
     h2 {
       margin-bottom: 10px;
+    }
+
+    .title {
+      text-align: center;
     }
   
     p, li {
@@ -44,6 +50,8 @@
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        margin-top: 5px;
+        margin-left: 5px;
   
         &:hover {
           background-color: #0056b3;
@@ -63,6 +71,15 @@
           .status {
             font-weight: bold;
           }
+        }
+        .btn-delete {
+          background-color: #dc3545; /* Bootstrap danger color */
+          color: white;
+          margin-top: 5px;
+        }
+        
+        .btn-delete:hover {
+          background-color: #c82333;
         }
       }
     }

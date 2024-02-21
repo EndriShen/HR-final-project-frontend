@@ -16,6 +16,6 @@ export class UserRequestInterceptor implements HttpInterceptor {
     const  newReq = request.clone({
       setHeaders: {'content-type': 'application/json'}
     })
-    return next.handle(request);
+    return next.handle(newReq);
   }
 }

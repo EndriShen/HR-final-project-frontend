@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SaveTimesheet } from 'src/app/models/saveTimesheet.model';
 import { SaveTimesheetRequest } from 'src/app/models/saveTimesheetRequest.model';
 import { Timesheet } from 'src/app/models/timesheet.model';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
@@ -11,12 +12,13 @@ import { TimesheetServiceService } from 'src/app/services/timesheet-service.serv
   styleUrls: ['./user-view.component.scss']
 })
 export class UserViewComponent implements OnInit {
-  user: any; // Replace with the correct user model
-  vacationRequest: any = { startDay: '', endDay: '', note: '' }; // Replace with the correct model
-  vacations: Timesheet[] = []; // Replace with the correct array of vacation data model
+  user: any;
+  vacationRequest: SaveTimesheet = { fromDate: '', toDate: '', note: '' };
+  vacations: Timesheet[] = [];
   isEditing = false;
   editableTimesheet: Timesheet | null = null;
-  editableTimesheetIndex: number | null = null; // Index of the timesheet being edited
+  editableTimesheetIndex: number | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private authService: AuthServiceService,
@@ -34,48 +36,46 @@ export class UserViewComponent implements OnInit {
     if (userData) {
       this.user = JSON.parse(userData);
     } else {
-      // If no user data is found, navigate back to the login page or handle accordingly
       this.router.navigate(['/login']);
     }
   }
 
   loadVacationRequests(): void {
-    const userId = this.user?.id; // Use optional chaining to safely access user ID
+    const userId = this.user?.id;
     if (userId) {
       this.timesheetService.getTimeSheetsByUserId(userId).subscribe({
         next: (timesheets) => {
-          this.vacations = timesheets; // Update the vacations list with the response
+          this.vacations = timesheets;
         },
         error: (error) => {
           console.error('Error loading timesheets:', error);
-          // Optionally, handle the error in the UI, such as showing a message
         }
       });
     }
   }
 
   onSubmit(): void {
-    if (this.vacationRequest.startDay && this.vacationRequest.endDay) {
+    if (this.vacationRequest.fromDate && this.vacationRequest.toDate) {
       const timesheetRequest: SaveTimesheetRequest = {
         saveTimesheet: {
-          fromDate: this.formatDate(this.vacationRequest.startDay),
-          toDate: this.formatDate(this.vacationRequest.endDay),
+          fromDate: this.formatDate(this.vacationRequest.fromDate),
+          toDate: this.formatDate(this.vacationRequest.toDate),
           note: this.vacationRequest.note
         },
         user:{
-        id: this.user.id // Retrieved from the loaded user data
+        id: this.user.id
         }
       };
 
       this.timesheetService.createTimesheet(timesheetRequest).subscribe({
         next: (newTimesheet) => {
           console.log('New timesheet created:', newTimesheet);
-          // Reload the page to reflect the changes
+          this.errorMessage = null;
           window.location.reload();
         },
         error: (error) => {
           console.error('Error creating timesheet:', error);
-          // Handle error state in the UI here
+          this.errorMessage = error.error.errorMessage || 'An unexpected error occurred.';
         }
       });
     }
@@ -85,14 +85,26 @@ export class UserViewComponent implements OnInit {
     return new Date(dateString).toISOString().split('T')[0];
   }
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-
   editTimesheet(vacation: Timesheet): void {
     this.editableTimesheet = { ...vacation }; // Create a copy for editing
     this.isEditing = true;
+  }
+
+  deleteTimesheet(id: number, index: number): void {
+    this.timesheetService.deleteTimesheet(id).subscribe({
+      next: () => {
+        console.log('Timesheet deleted successfully');
+        this.vacations.splice(index, 1); // Remove the timesheet from the list
+        this.editableTimesheetIndex = null; // Reset the editable index
+        // Optionally, you might reload timesheets from the server instead
+        this.loadVacationRequests();
+        //window.location.reload();
+      },
+      error: (error) => {
+        console.error('Error deleting timesheet:', error);
+        // Handle error state here, possibly showing an error message to the user
+      }
+    });
   }
 
   // onEditSubmit(): void {
@@ -115,17 +127,14 @@ export class UserViewComponent implements OnInit {
 
   onEditSubmit(vacation: Timesheet): void {
     if (vacation && vacation.id) {
-      // Call the update method with the edited timesheet data
       this.timesheetService.updateTimesheetUser(vacation.id, vacation).subscribe({
         next: (updatedTimesheet) => {
-          // Update the timesheet in the vacations list
           this.vacations[this.editableTimesheetIndex!] = updatedTimesheet;
           this.editableTimesheetIndex = null; // Reset the editable index
           window.location.reload();
         },
         error: (error) => {
           console.error('Error updating timesheet:', error);
-          // Handle error state in the UI here
         }
       });
     }
@@ -136,9 +145,7 @@ export class UserViewComponent implements OnInit {
   }
 
   cancelEdit(): void {
-    // Reset editing state without saving changes
     this.editableTimesheetIndex = null;
-    // Optionally, reload timesheets to reset any changes made in the form
     this.loadVacationRequests();
   }
   // cancelEdit(): void {

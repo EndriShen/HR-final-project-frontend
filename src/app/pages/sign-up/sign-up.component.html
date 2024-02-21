@@ -1,5 +1,5 @@
 <header>
-    <h1>Welcome to HR Solutions!</h1>
+    <h1>Welcome to DayOff Track!</h1>
   </header>
   
   <div class="signup-container">
@@ -23,6 +23,7 @@
         <label for="username">Username:</label>
         <input type="text" id="username" formControlName="username" />
         <div *ngIf="signupForm.get('username')?.hasError('required') && signupForm.controls['username'].touched" class="error">Username is required.</div>
+        <div *ngIf="signupForm.get('username')?.hasError('usernameTaken')" class="error">Username already exists.</div>
       </div>
 
       <div class="form-group">

@@ -21,4 +21,8 @@ export class UserServiceService {
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/delete/${id}`);
   }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/all-users`);
+  }
 }

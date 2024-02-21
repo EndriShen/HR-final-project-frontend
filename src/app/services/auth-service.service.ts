@@ -47,5 +47,4 @@ export class AuthServiceService {
     const url = `${this.baseUrl}/user/check-username?username=${encodeURIComponent(username)}`;
     return this.http.get<boolean>(url);
   }
-  
 }
