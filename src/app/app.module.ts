@@ -15,6 +15,8 @@ import { HeaderComponent } from './pages/header/header.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { UserFilterPipe } from './pipes/user-filter.pipe';
 import { UserSortPipe } from './pipes/user-sort.pipe';
+import { UnknownUrlComponent } from './pages/unknown-url/unknown-url.component';
+import { NgAlertBoxModule } from 'node_modules/ng-alert-box-popup'
 
 @NgModule({
   declarations: [
@@ -28,13 +30,15 @@ import { UserSortPipe } from './pipes/user-sort.pipe';
     FooterComponent,
     UserFilterPipe,
     UserSortPipe,
+    UnknownUrlComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgAlertBoxModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: UserRequestInterceptor, multi: true},

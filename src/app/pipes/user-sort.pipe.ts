@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { User } from '../models/user.model';
-import { Timesheet } from '../models/timesheet.model';
+import { User } from '../models/user-models/user.model';
+import { Timesheet } from '../models/timesheet-models/timesheet.model';
 
 @Pipe({
   name: 'userSort'

@@ -5,12 +5,20 @@
     justify-content: space-between;
     padding: 20px;
   
+    .user-info {
+      text-align: center;
+    }
+
     .user-info, .vacation-request, .vacation-days-list {
       flex: 1;
       margin-right: 20px;
       
       &:last-child {
         margin-right: 0;
+      }
+
+      h2 {
+        margin-bottom: 25px;
       }
     }
   
@@ -110,3 +118,21 @@
     }
   }
   
+  .timesheet-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px; /* Space between cards */
+    background-color: #f9f9f9; /* Light background for the card */
+  }
+
+  .timesheet-card.approved {
+    background-color: #67ee87; /* Green for approved */
+  }
+  
+  .timesheet-card.rejected {
+    background-color: #ff6978; /* Red for rejected */
+  }

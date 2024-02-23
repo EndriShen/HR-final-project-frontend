@@ -1,9 +1,11 @@
+import { StatusType } from "../enums/status-type.enum";
+
 export class Timesheet {
     id?: number;
     userId?: number;
     fromDate?: string;
     toDate?: string;
-    status?: 'PENDING' | 'APPROVED' | 'REJECTED';
+    status?: StatusType;
     note?: string;
     createdAt?: string;
     createdBy?: string;

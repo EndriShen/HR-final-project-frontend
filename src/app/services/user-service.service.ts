@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UpdateUserRequest } from '../models/updateUser.model';
-import { Observable, catchError, of } from 'rxjs';
-import { User } from '../models/user.model';
+import { UpdateUserRequest } from '../models/user-models/updateUser.model';
+import { Observable, catchError, map, of } from 'rxjs';
+import { User } from '../models/user-models/user.model';
+import { UserRole } from '../models/enums/user-role.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,8 @@ export class UserServiceService {
   }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/all-users`);
+    return this.http.get<any[]>(`${this.baseUrl}/all-users`).pipe(
+      map(users => users.filter(user => user.role !== UserRole.Manager))
+    );
   }
 }

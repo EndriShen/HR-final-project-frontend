@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, tap } from 'rxjs';
 import { StatusType } from 'src/app/models/enums/status-type.enum';
-import { Timesheet } from 'src/app/models/timesheet.model';
-import { UpdateTimesheetManager } from 'src/app/models/updateTimesheetManager.model';
+import { Timesheet } from 'src/app/models/timesheet-models/timesheet.model';
+import { UpdateTimesheetManager } from 'src/app/models/timesheet-models/updateTimesheetManager.model';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { TimesheetServiceService } from 'src/app/services/timesheet-service.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
@@ -29,13 +30,23 @@ export class ManagerEditViewComponent implements OnInit{
     private userService: UserServiceService,
     private timesheetService: TimesheetServiceService) {}
 
+  // ngOnInit() {
+  //   this.route.paramMap.subscribe(params => {
+  //     this.userId = +params.get('userId')!; // The '+' converts the string to a number
+  //     this.userEditFormInit();
+  //     this.loadUserData(this.userId);
+  //     this.loadUserTimesheets(this.userId);
+  //   });
+  // }
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.userId = +params.get('userId')!; // The '+' converts the string to a number
-      this.userEditFormInit();
-      this.loadUserData(this.userId);
-      this.loadUserTimesheets(this.userId);
-    });
+    this.route.paramMap.pipe(
+      tap(params => {
+        this.userId = +params.get('userId')!;
+      }),
+      tap(() => this.userEditFormInit()),
+      tap(() => this.loadUserData(this.userId)),
+      tap(() => this.loadUserTimesheets(this.userId))
+    ).subscribe();
   }
 
   userEditFormInit() {
@@ -46,39 +57,90 @@ export class ManagerEditViewComponent implements OnInit{
     });
   }
 
+  // loadUserData(userId: number) {
+  //   this.userService.getUserById(userId).subscribe({
+  //     next: (user) => {
+  //       if (user) {
+  //         this.editUserForm.patchValue({
+  //           firstName: user.firstName,
+  //           lastName: user.lastName,
+  //           username: user.username,
+  //         });
+  //       }
+  //     },
+  //     error: () => {
+  //       console.error('Error while loading User Data');
+  //     }
+  //   });
+  // }
   loadUserData(userId: number) {
-    this.userService.getUserById(userId).subscribe({
-      next: (user) => {
-        if (user) {
-          this.editUserForm.patchValue({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            username: user.username,
-          });
-        }
-      },
-      error: () => {
-        console.error('Error while loading User Data');
-      }
-    });
+    this.userService.getUserById(userId)
+      .pipe(
+        tap((user) => {
+          if (user) {
+            this.editUserForm.patchValue({
+              firstName: user.firstName,
+              lastName: user.lastName,
+              username: user.username,
+            });
+          }
+        }),
+        catchError((error) => {
+          console.error('Error while loading User Data');
+          throw error; // Rethrow or handle as needed
+        })
+      )
+      .subscribe();
   }
 
+  // loadUserTimesheets(userId: number) {
+  //   this.timesheetService.getTimeSheetsByUserId(userId).subscribe(timesheets => {
+  //     this.userTimesheets = timesheets;
+  //   });
+  // }
   loadUserTimesheets(userId: number) {
-    this.timesheetService.getTimeSheetsByUserId(userId).subscribe(timesheets => {
-      this.userTimesheets = timesheets;
-    });
+    this.timesheetService.getTimeSheetsByUserId(userId)
+      .pipe(
+        tap(timesheets => {
+          this.userTimesheets = timesheets;
+        })
+      )
+      .subscribe();
   }
 
+  // onSubmit() {
+  //   if (this.editUserForm.valid) {
+  //     this.userService.updateUser(this.userId, this.managerId, this.editUserForm.value).subscribe({
+  //       next: () => {
+  //         this.router.navigate(['/manager-list']);
+  //       },
+  //       error: () => {
+  //         console.error('Error updating user information.')
+  //       }
+  //     });
+  //   }
+  // }
   onSubmit() {
-    if (this.editUserForm.valid) {
-      this.userService.updateUser(this.userId, this.managerId, this.editUserForm.value).subscribe({
-        next: () => {
-          this.router.navigate(['/manager-list']);
-        },
-        error: () => {
-          console.error('Error updating user information.')
-        }
-      });
+    const isConfirmed = window.confirm('Are you sure you want save the user changes?');
+
+    if(isConfirmed) {
+      if (this.editUserForm.valid) {
+        this.userService.updateUser(this.userId, this.managerId, this.editUserForm.value)
+          .pipe(
+            tap(() => {
+              this.router.navigate(['/manager-list']);
+            }),
+            catchError((error) => {
+              console.error('Error updating user information.');
+              // Handle the error or rethrow it
+              throw error;
+            })
+          )
+          .subscribe();
+      }
+    }
+    else{
+      this.router.navigate(['/manager-list'])
     }
   }
 
@@ -87,13 +149,25 @@ export class ManagerEditViewComponent implements OnInit{
       status: status,
       modifiedBy: this.managerUsername
     };
-    this.timesheetService.updateTimesheetManager(timesheetId, updatePayload).subscribe({
-      next: () => {
+    // this.timesheetService.updateTimesheetManager(timesheetId, updatePayload).subscribe({
+    //   next: () => {
+    //     this.loadUserTimesheets(this.userId);
+    //   },
+    //   error: () => {
+    //     console.error('Error updating timesheet status.')
+    //   }
+    // });
+    this.timesheetService.updateTimesheetManager(timesheetId, updatePayload)
+    .pipe(
+      tap(() => {
         this.loadUserTimesheets(this.userId);
-      },
-      error: () => {
-        console.error('Error updating timesheet status.')
-      }
-    });
+      }),
+      catchError((error) => {
+        console.error('Error updating timesheet status.');
+        // Optionally handle the error, e.g., by showing a user message
+        throw error; // Rethrow or handle as needed
+      })
+    )
+    .subscribe();
   }
 }

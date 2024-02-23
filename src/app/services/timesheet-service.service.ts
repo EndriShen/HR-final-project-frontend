@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SaveTimesheetRequest } from '../models/saveTimesheetRequest.model';
-import { Timesheet } from '../models/timesheet.model';
+import { SaveTimesheetRequest } from '../models/timesheet-models/saveTimesheetRequest.model';
+import { Timesheet } from '../models/timesheet-models/timesheet.model';
 import { Observable, catchError, of } from 'rxjs';
-import { UpdateTimesheetUser } from '../models/updateTimesheetUser.model';
-import { UpdateTimesheetManager } from '../models/updateTimesheetManager.model';
-import { TimesheetResponse } from '../models/timesheetResponse.model';
+import { UpdateTimesheetUser } from '../models/timesheet-models/updateTimesheetUser.model';
+import { UpdateTimesheetManager } from '../models/timesheet-models/updateTimesheetManager.model';
+import { TimesheetResponse } from '../models/timesheet-models/timesheetResponse.model';
 
 @Injectable({
   providedIn: 'root'

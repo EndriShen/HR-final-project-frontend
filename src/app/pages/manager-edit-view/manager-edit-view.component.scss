@@ -81,4 +81,11 @@ h3 {
     background-color: #dc3545; /* Red for reject */
   }
   
+  .timesheet-card.approved {
+    background-color: #67ee87; /* Green for approved */
+  }
+  
+  .timesheet-card.rejected {
+    background-color: #ff6978; /* Red for rejected */
+  }
   

@@ -1,4 +1,5 @@
-import { Timesheet } from "./timesheet.model";
+import { UserRole } from "../enums/user-role.enum";
+import { Timesheet } from "../timesheet-models/timesheet.model";
 
 export class User {
     id?: number;
@@ -6,7 +7,7 @@ export class User {
     lastName?: string;
     username?: string;
     password?: string;
-    role?: 'USER' | 'MANAGER';
+    role?: UserRole;
     daysOff?: number;
     createdAt?: string;
     createdBy?: string;

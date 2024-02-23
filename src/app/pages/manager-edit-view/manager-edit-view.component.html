@@ -28,10 +28,11 @@
 
   <div class="user-imesheets">
     <h3 class="ts-header">Applied Timesheets</h3>
-    <div *ngFor="let timesheet of userTimesheets" class="timesheet-card">
+    <div *ngFor="let timesheet of userTimesheets" class="timesheet-card"
+    [ngClass]="{'approved': timesheet.status === statusType.Approved, 'rejected': timesheet.status === statusType.Rejected}">
       <div class="timesheet-content">
-        <span>{{ timesheet.fromDate }} - {{ timesheet.toDate }}</span>
-        <span>Status: {{timesheet.status}}</span>
+        <span>{{ timesheet.fromDate | date }} - {{ timesheet.toDate | date}}</span>
+        <span>Status: <strong>{{timesheet.status}}</strong></span>
       </div>
       <div *ngIf="timesheet.status === statusType.Pending" class="timesheet-actions">
         <button class="btn-approve" (click)="updateTimesheetStatus(timesheet.id!, statusType.Approved)">Approve</button>
