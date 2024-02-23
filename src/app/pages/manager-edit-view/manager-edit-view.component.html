@@ -1,4 +1,42 @@
-<p>manager-edit-view works!</p>
-<ng-container *ngIf="authService.isLoggedIn()">
-    <button class="logout-button" (click)="logout()">Log Out</button>
-  </ng-container>
+<header>
+  <h1>Edit User</h1>
+</header>
+<div class="edit-user-container">
+  <div class="user-form">
+    <h3>User Information</h3>
+    <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" formControlName="firstName" class="form-control">
+      </div>
+    
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" formControlName="lastName" class="form-control">
+      </div>
+    
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" formControlName="username" class="form-control">
+      </div>
+    
+      <div class="button-container">
+        <button type="submit" class="btn btn-success">Save Changes</button>
+      </div>
+    </form>    
+  </div>
+
+  <div class="user-imesheets">
+    <h3 class="ts-header">Applied Timesheets</h3>
+    <div *ngFor="let timesheet of userTimesheets" class="timesheet-card">
+      <div class="timesheet-content">
+        <span>{{ timesheet.fromDate }} - {{ timesheet.toDate }}</span>
+        <span>Status: {{timesheet.status}}</span>
+      </div>
+      <div *ngIf="timesheet.status === statusType.Pending" class="timesheet-actions">
+        <button class="btn-approve" (click)="updateTimesheetStatus(timesheet.id!, statusType.Approved)">Approve</button>
+        <button class="btn-reject"  (click)="updateTimesheetStatus(timesheet.id!, statusType.Rejected)">Reject</button>
+      </div>
+    </div>
+  </div>
+</div>

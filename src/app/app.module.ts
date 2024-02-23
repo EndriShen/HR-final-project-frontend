@@ -13,6 +13,8 @@ import { ManagerListViewComponent } from './pages/manager-list-view/manager-list
 import { ManagerEditViewComponent } from './pages/manager-edit-view/manager-edit-view.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { FooterComponent } from './pages/footer/footer.component';
+import { UserFilterPipe } from './pipes/user-filter.pipe';
+import { UserSortPipe } from './pipes/user-sort.pipe';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { FooterComponent } from './pages/footer/footer.component';
     ManagerEditViewComponent,
     HeaderComponent,
     FooterComponent,
+    UserFilterPipe,
+    UserSortPipe,
   ],
   imports: [
     BrowserModule,

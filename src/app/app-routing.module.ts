@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'signup', component: SignUpComponent},
   { path: 'user-view', component: UserViewComponent},
   { path: 'manager-list', component: ManagerListViewComponent},
-  { path: 'manager-edit', component: ManagerEditViewComponent},
+  { path: 'manager-edit/:userId', component: ManagerEditViewComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full'}
 ];
 

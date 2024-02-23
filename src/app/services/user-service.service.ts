@@ -22,6 +22,10 @@ export class UserServiceService {
     return this.http.delete<void>(`${this.baseUrl}/delete/${id}`);
   }
 
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/${userId}`);
+  }
+
   getAllUsers(): Observable<User[]> {
     return this.http.get<any[]>(`${this.baseUrl}/all-users`);
   }

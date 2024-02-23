@@ -7,18 +7,18 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="username">Username:</label>
-      <input type="username" id="username" formControlName="username"/>
+      <input type="username" id="username" formControlName="username" />
       <div *ngIf="loginForm.get('username')?.hasError('required') && loginForm.controls['username'].touched" class="error">
-      Username is required.</div>
+        Username is required.</div>
     </div>
-  
+
     <div class="form-group">
       <label for="password">Password:</label>
-      <input type="password" id="password" formControlName="password"/>
+      <input type="password" id="password" formControlName="password" />
       <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.controls['password'].touched" class="error">
-      Password is required.</div>
+        Password is required.</div>
     </div>
-  
+
     <button type="submit" [disabled]="!loginForm.valid">Login</button>
 
     <div class="switch-form">

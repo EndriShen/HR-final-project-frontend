@@ -1,3 +1,5 @@
+import { Timesheet } from "./timesheet.model";
+
 export class User {
     id?: number;
     firstName?: string;
@@ -10,4 +12,5 @@ export class User {
     createdBy?: string;
     modifiedAt?: string;
     modifiedBy?: string;
+    timesheets?: Timesheet[];
 }
