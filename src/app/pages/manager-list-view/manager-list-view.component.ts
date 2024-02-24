@@ -17,41 +17,29 @@ export class ManagerListViewComponent implements OnInit {
   users: User[] = [];
   pendingStatusMap = new Map<number, boolean>();
   searchTerm: string = '';
-  
+
   constructor(
     private userService: UserServiceService,
     private timesheetService: TimesheetServiceService,
     private router: Router,
     private alerts: NgAlertBoxComponent
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.fetchUsers();
   }
 
-  // fetchUsers(): void {
-  //   this.userService.getAllUsers().subscribe(users => {
-  //     this.users = users;
-  //     users.forEach(user => {
-  //       if (user.id) {
-  //         this.checkAndSetPendingStatus(user.id);
-  //       }
-  //     });
-  //   });
-  // }
   fetchUsers(): void {
-    this.userService.getAllUsers()
-      .pipe(
-        tap(users => {
-          this.users = users;
-          users.forEach(user => {
-            if (user.id) {
-              this.checkAndSetPendingStatus(user.id);
-            }
-          });
-        })
-      )
-      .subscribe();
+    this.userService.getAllUsers().pipe(
+      tap(users => {
+        this.users = users;
+        users.forEach(user => {
+          if (user.id) {
+            this.checkAndSetPendingStatus(user.id);
+          }
+        });
+      })
+    ).subscribe();
   }
 
   checkAndSetPendingStatus(userId: number): void {
@@ -65,24 +53,13 @@ export class ManagerListViewComponent implements OnInit {
     this.router.navigate(['/manager-edit', userId]);
   }
 
-  // confirmAndDeleteUser(userId: number): void {
-  //   if (confirm('Are you sure you want to delete this user?')) {
-  //     this.userService.deleteUser(userId).subscribe(() => {
-  //       // Refresh the list or remove the user from the local array
-  //       this.fetchUsers();
-  //     });
-  //   }
-  // }
-
   confirmAndDeleteUser(userId: number): void {
-    of(confirm('Are you sure you want to delete this user?'))
-      .pipe(
-        filter(confirmed => confirmed === true), // Proceed only if the user confirmed
-        switchMap(() => this.userService.deleteUser(userId)),
-        tap (() => this.alerts.dialog('S', 'User Deleted Successfully!')),
-        tap(() => this.fetchUsers()) // Refresh users list upon successful deletion
-      )
-      .subscribe();
+    of(confirm('Are you sure you want to delete this user?')).pipe(
+      filter(confirmed => confirmed === true), // Proceed only if the user confirmed
+      switchMap(() => this.userService.deleteUser(userId)),
+      tap(() => this.alerts.dialog('S', 'User Deleted Successfully!')),
+      tap(() => this.fetchUsers())
+    ).subscribe();
   }
 
   hasPendingTimesheet(user: User): boolean {

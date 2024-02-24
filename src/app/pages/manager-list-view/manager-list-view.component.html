@@ -1,42 +1,26 @@
-<!-- <div class="user-list">
-    <div *ngFor="let user of users" class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{ user.firstName }} {{ user.lastName }}</h5>
-        <p class="card-text">Days Off: {{ user.daysOff }} / 20</p>
-        <p class="card-status" *ngIf="pendingStatusMap.get(user.id!)">Status: PENDING</p>
-        <button class="btn btn-primary" (click)="navigateToEdit(user.id!)">Edit</button>
-        <button class="btn btn-danger" (click)="confirmAndDeleteUser(user.id!)">Delete</button>
+<header>
+  <h1>User List</h1>
+</header>
+<div class="user-list container">
+  <div class="filterSec">
+    <span><strong>Search User: </strong></span>
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Search by name" style="margin-left: 5px;" />
+  </div>
+  <div *ngFor="let user of users | userFilter:searchTerm" class="card mb-3">
+    <div class="card-body d-flex align-items-center justify-content-between">
+      <div class="user-info">
+        <h5 class="card-title mb-0"> <strong>User:</strong> {{ user.firstName }} {{ user.lastName }}</h5>
       </div>
-    </div>
-  </div> -->
-
-  <header>
-    <h1>User List</h1>
-  </header>
-  <div class="user-list container">
-    <div class="filterSec">
-        <span><strong>Search User: </strong></span>
-        <input type="text" [(ngModel)]="searchTerm" placeholder="Search by name" style="margin-left: 5px;"/>
-    </div>
-    <div *ngFor="let user of users | userFilter:searchTerm" class="card mb-3">
-      <div class="card-body d-flex align-items-center justify-content-between">
-        <div class="user-info">
-          <h5 class="card-title mb-0">{{ user.firstName }} {{ user.lastName }}</h5>
-        </div>
-        <div class="user-days-off">
-          <p class="card-text mb-0">Days Off: {{ user.daysOff }} / 20</p>
-        </div>
-        <div class="user-status flex-grow-1">
-            <span *ngIf="pendingStatusMap.get(user.id!)" style="color: rgb(169, 0, 0);">Status: PENDING</span>
-        </div>
-        <div class="card-actions">
-          <button class="btn btn-primary btn-sm" (click)="navigateToEdit(user.id!)">Edit</button>
-          <button class="btn btn-danger btn-sm" (click)="confirmAndDeleteUser(user.id!)">Delete</button>
-        </div>
+      <div class="user-days-off">
+        <p class="card-text mb-0">Days Off: {{ user.daysOff }} / 20</p>
+      </div>
+      <div class="user-status flex-grow-1">
+        <span *ngIf="pendingStatusMap.get(user.id!)" style="color: rgb(169, 0, 0);">Status: PENDING</span>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-primary btn-sm" (click)="navigateToEdit(user.id!)">Edit</button>
+        <button class="btn btn-danger btn-sm" (click)="confirmAndDeleteUser(user.id!)">Delete</button>
       </div>
     </div>
   </div>
-  
-  
-  
-  
+</div>

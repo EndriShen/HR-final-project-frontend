@@ -10,11 +10,11 @@ import { UserValidators } from 'src/app/validators/user-validators';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit{
+export class SignUpComponent implements OnInit {
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthServiceService) {}
-  
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthServiceService) { }
+
   ngOnInit(): void {
     this.signupForm = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -24,18 +24,6 @@ export class SignUpComponent implements OnInit{
     });
   }
 
-  // onSubmit() {
-  //   if (this.signupForm.valid) {
-  //     const userData = this.signupForm.value;
-  //     this.authService.createUser(userData).subscribe({
-  //       next: () => {
-  //         console.log('Signup successful');
-  //         this.router.navigate(['/login']);
-  //       },
-  //       error: (error) => console.error('Error during signup:', error)
-  //     });
-  //   }
-  // }
   onSubmit() {
     if (this.signupForm.valid) {
       const userData = this.signupForm.value;
@@ -46,11 +34,9 @@ export class SignUpComponent implements OnInit{
         }),
         catchError((error) => {
           console.error('Error during signup:', error);
-          // If you want to handle errors within the observable chain, you must return an observable here.
-          // `of()` creates a new observable. You might want to use a different strategy based on your error handling policy.
           return of();
         })
-      ).subscribe(); // The subscription is necessary to trigger the observable chain, but it's kept empty here.
+      ).subscribe();
     }
   }
 }

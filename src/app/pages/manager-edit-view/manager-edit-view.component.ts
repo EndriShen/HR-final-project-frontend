@@ -14,7 +14,7 @@ import { UserServiceService } from 'src/app/services/user-service.service';
   templateUrl: './manager-edit-view.component.html',
   styleUrls: ['./manager-edit-view.component.scss']
 })
-export class ManagerEditViewComponent implements OnInit{
+export class ManagerEditViewComponent implements OnInit {
   editUserForm!: FormGroup;
   userId!: number;
   userTimesheets: Timesheet[] = [];
@@ -24,20 +24,12 @@ export class ManagerEditViewComponent implements OnInit{
   managerId = this.currentUser ? JSON.parse(this.currentUser).id : null;
 
   constructor(
-    private route: ActivatedRoute, 
-    private router: Router, 
+    private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private userService: UserServiceService,
-    private timesheetService: TimesheetServiceService) {}
+    private timesheetService: TimesheetServiceService) { }
 
-  // ngOnInit() {
-  //   this.route.paramMap.subscribe(params => {
-  //     this.userId = +params.get('userId')!; // The '+' converts the string to a number
-  //     this.userEditFormInit();
-  //     this.loadUserData(this.userId);
-  //     this.loadUserTimesheets(this.userId);
-  //   });
-  // }
   ngOnInit() {
     this.route.paramMap.pipe(
       tap(params => {
@@ -57,89 +49,48 @@ export class ManagerEditViewComponent implements OnInit{
     });
   }
 
-  // loadUserData(userId: number) {
-  //   this.userService.getUserById(userId).subscribe({
-  //     next: (user) => {
-  //       if (user) {
-  //         this.editUserForm.patchValue({
-  //           firstName: user.firstName,
-  //           lastName: user.lastName,
-  //           username: user.username,
-  //         });
-  //       }
-  //     },
-  //     error: () => {
-  //       console.error('Error while loading User Data');
-  //     }
-  //   });
-  // }
   loadUserData(userId: number) {
-    this.userService.getUserById(userId)
-      .pipe(
-        tap((user) => {
-          if (user) {
-            this.editUserForm.patchValue({
-              firstName: user.firstName,
-              lastName: user.lastName,
-              username: user.username,
-            });
-          }
-        }),
-        catchError((error) => {
-          console.error('Error while loading User Data');
-          throw error; // Rethrow or handle as needed
-        })
-      )
-      .subscribe();
+    this.userService.getUserById(userId).pipe(
+      tap((user) => {
+        if (user) {
+          this.editUserForm.patchValue({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+          });
+        }
+      }),
+      catchError((error) => {
+        console.error('Error while loading User Data');
+        throw error;
+      })
+    ).subscribe();
   }
 
-  // loadUserTimesheets(userId: number) {
-  //   this.timesheetService.getTimeSheetsByUserId(userId).subscribe(timesheets => {
-  //     this.userTimesheets = timesheets;
-  //   });
-  // }
   loadUserTimesheets(userId: number) {
-    this.timesheetService.getTimeSheetsByUserId(userId)
-      .pipe(
-        tap(timesheets => {
-          this.userTimesheets = timesheets;
-        })
-      )
-      .subscribe();
+    this.timesheetService.getTimeSheetsByUserId(userId).pipe(
+      tap(timesheets => {
+        this.userTimesheets = timesheets;
+      })
+    ).subscribe();
   }
 
-  // onSubmit() {
-  //   if (this.editUserForm.valid) {
-  //     this.userService.updateUser(this.userId, this.managerId, this.editUserForm.value).subscribe({
-  //       next: () => {
-  //         this.router.navigate(['/manager-list']);
-  //       },
-  //       error: () => {
-  //         console.error('Error updating user information.')
-  //       }
-  //     });
-  //   }
-  // }
   onSubmit() {
     const isConfirmed = window.confirm('Are you sure you want save the user changes?');
-
-    if(isConfirmed) {
+    if (isConfirmed) {
       if (this.editUserForm.valid) {
-        this.userService.updateUser(this.userId, this.managerId, this.editUserForm.value)
-          .pipe(
-            tap(() => {
-              this.router.navigate(['/manager-list']);
-            }),
-            catchError((error) => {
-              console.error('Error updating user information.');
-              // Handle the error or rethrow it
-              throw error;
-            })
-          )
-          .subscribe();
+        this.userService.updateUser(this.userId, this.managerId, this.editUserForm.value).pipe(
+          tap(() => {
+            this.router.navigate(['/manager-list']);
+          }),
+          catchError((error) => {
+            console.error('Error updating user information.');
+            throw error;
+          })
+        ).subscribe();
       }
     }
-    else{
+    else {
       this.router.navigate(['/manager-list'])
     }
   }
@@ -149,16 +100,8 @@ export class ManagerEditViewComponent implements OnInit{
       status: status,
       modifiedBy: this.managerUsername
     };
-    // this.timesheetService.updateTimesheetManager(timesheetId, updatePayload).subscribe({
-    //   next: () => {
-    //     this.loadUserTimesheets(this.userId);
-    //   },
-    //   error: () => {
-    //     console.error('Error updating timesheet status.')
-    //   }
-    // });
-    this.timesheetService.updateTimesheetManager(timesheetId, updatePayload)
-    .pipe(
+
+    this.timesheetService.updateTimesheetManager(timesheetId, updatePayload).pipe(
       tap(() => {
         this.loadUserTimesheets(this.userId);
       }),
@@ -167,7 +110,6 @@ export class ManagerEditViewComponent implements OnInit{
         // Optionally handle the error, e.g., by showing a user message
         throw error; // Rethrow or handle as needed
       })
-    )
-    .subscribe();
+    ).subscribe();
   }
 }

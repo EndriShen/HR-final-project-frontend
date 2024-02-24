@@ -1,66 +1,55 @@
-// .user-list {
-//     display: flex;
-//     flex-wrap: wrap;
-//     gap: 20px; // Space between cards
-//   }
-  
-//   .card {
-//     width: 300px; // Fixed card width
-//     // Additional card styling
-//   }
-  
 header {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .filterSec {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .user-list {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* Space between cards */
-    padding: 0 15px; /* Aesthetic space on the left and right */
-  }
-  
-  .card {
-    border: 1.5px solid #dee2e6;
-    border-radius: 0.25rem;
-    padding: 0.5rem; /* Padding inside the card */
-    display: flex; /* Use flex layout for the card */
-    flex-direction: row; /* Arrange items in a row */
-    align-items: center; /* Vertically align items in the center */
-    justify-content: space-between; /* Distribute space between items */
-  }
-  
-  .user-info, .user-days-off, .user-status .card-actions{
-    flex-basis: 25%; /* Give each section a third of the space */
-    display: flex; /* Use flex layout within each section */
-    justify-content: flex-start; /* Align content to the start */
-  }
-  
-  .user-days-off {
-    justify-content: center; /* Center the "Days Off" information */
-  }
-  
-  .user-status {
-    justify-content: flex-end; /* Align the "Status" information to the end */
-  }
-  
-  .card-actions {
-    flex-shrink: 0; /* Prevent action buttons from shrinking */
-    display: flex;
-    gap: 0.5rem; /* Space between Edit and Delete buttons */
-  }
-  
-  .btn {
-    padding: 0.25rem 0.5rem; /* Padding for buttons */
-    font-size: 0.875rem; /* Font size for buttons */
-  }
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 15px;
+}
 
-  
+.card {
+  border: 1.5px solid #dee2e6;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-info,
+.user-days-off,
+.user-status .card-actions {
+  flex-basis: 25%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-days-off {
+  justify-content: center;
+}
+
+.user-status {
+  justify-content: flex-end;
+}
+
+.card-actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}

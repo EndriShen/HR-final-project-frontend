@@ -15,7 +15,7 @@ export class LogInComponent implements OnInit {
   loginFailed: boolean = false;
 
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthServiceService) {}
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthServiceService) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -29,7 +29,7 @@ export class LogInComponent implements OnInit {
       const { username, password } = this.loginForm.value;
       this.authService.login(username, password).pipe(
         tap(user => {
-          if (user) {  
+          if (user) {
             // Redirect based on user's role
             const userRole = user.role;
             if (userRole === 'USER') {

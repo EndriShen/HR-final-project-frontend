@@ -1,91 +1,92 @@
 header {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .form-group {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .user-form .button-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 h3 {
-    display: flex;
-    text-align: center;
-    justify-content: center;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  text-decoration: underline;
 }
 
 .ts-header {
-    margin-top: 25px;
-    margin-bottom: 25px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .edit-user-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-  }
-  
-  .user-form, .user-timesheets {
-    flex: 1; /* Each takes half of the container width */
-    padding: 20px; /* Spacing inside each section */
-  }
-  
-  /* Optionally, add a max-width and margin auto to center the container */
-  .edit-user-container {
-    max-width: 1200px;
-    margin: auto;
-  }
-  
-  .timesheet-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px; /* Space between cards */
-    background-color: #f9f9f9; /* Light background for the card */
-  }
-  
-  .timesheet-content {
-    display: flex;
-    align-items: center;
-    gap: 15px; /* Space between date and status */
-  }
-  
-  .timesheet-actions {
-    display: flex;
-    gap: 10px; /* Space between buttons */
-  }
-  
-  .btn-approve, .btn-reject {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    margin-left: 10px;
-  }
-  
-  .btn-approve {
-    background-color: #28a745; /* Green for approve */
-  }
-  
-  .btn-reject {
-    background-color: #dc3545; /* Red for reject */
-  }
-  
-  .timesheet-card.approved {
-    background-color: #67ee87; /* Green for approved */
-  }
-  
-  .timesheet-card.rejected {
-    background-color: #ff6978; /* Red for rejected */
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.user-form,
+.user-timesheets {
+  flex: 1;
+  padding: 20px;
+}
+
+.edit-user-container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.timesheet-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.timesheet-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.timesheet-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-approve,
+.btn-reject {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.btn-approve {
+  background-color: #28a745;
+}
+
+.btn-reject {
+  background-color: #dc3545;
+}
+
+.timesheet-card.approved {
+  background-color: #67ee87;
+}
+
+.timesheet-card.rejected {
+  background-color: #ff6978;
+}

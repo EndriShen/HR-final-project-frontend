@@ -10,7 +10,7 @@ export class AuthServiceService {
 
   private baseUrl = 'http://localhost:8080/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createUser(user: User): Observable<User> {
     const url = `${this.baseUrl}/user/create`;

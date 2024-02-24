@@ -1,138 +1,140 @@
+header {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .user-view {
-    margin-top: 40px;
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-  
-    .user-info {
-      text-align: center;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 5px;
+
+  .user-info {
+    text-align: center;
+  }
+
+  .user-info,
+  .vacation-request,
+  .vacation-days-list {
+    flex: 1;
+    margin-right: 20px;
+    padding: 20px 15px;
+    border: 1px solid rgb(127, 127, 127);
+    border-radius: 4px;
+
+    &:last-child {
+      margin-right: 0;
     }
 
-    .user-info, .vacation-request, .vacation-days-list {
-      flex: 1;
-      margin-right: 20px;
-      
-      &:last-child {
-        margin-right: 0;
-      }
-
-      h2 {
-        margin-bottom: 25px;
-      }
-    }
-  
     h2 {
-      margin-bottom: 10px;
+      margin-bottom: 25px;
+    }
+  }
+
+  h2 {
+    margin-bottom: 10px;
+    text-decoration: underline;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  p {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 5px;
     }
 
-    .title {
-      text-align: center;
+    input[type="date"],
+    textarea {
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-  
-    p, li {
-      font-size: 16px;
-      line-height: 1.5;
-    }
-  
-    form {
-      display: flex;
-      flex-direction: column;
-  
-      label {
-        margin-bottom: 5px;
-      }
-  
-      input[type="date"],
-      textarea {
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-  
-      button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 5px;
-  
-        &:hover {
-          background-color: #0056b3;
-        }
-      }
-    }
-  
-    .vacation-days-list {
-      ul {
-        list-style-type: none;
-        padding: 0;
-  
-        li {
-          padding: 5px;
-          border-bottom: 1px solid #ccc;
-  
-          .status {
-            font-weight: bold;
-          }
-        }
-        .btn-delete {
-          background-color: #dc3545; /* Bootstrap danger color */
-          color: white;
-          margin-top: 5px;
-        }
-        
-        .btn-delete:hover {
-          background-color: #c82333;
-        }
-      }
-    }
-  
-    button.logout {
+
+    button {
       padding: 10px 20px;
-      margin-top: 20px;
-      background-color: #dc3545;
+      background-color: #007bff;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-  
-      &:hover {
-        background-color: #bd2130;
-      }
-    }
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .user-view {
-      flex-direction: column;
-  
-      .user-info, .vacation-request, .vacation-days-list {
-        margin-right: 0;
-        margin-bottom: 20px;
-      }
-    }
-  }
-  
-  .timesheet-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px; /* Space between cards */
-    background-color: #f9f9f9; /* Light background for the card */
-  }
+      margin-top: 5px;
 
-  .timesheet-card.approved {
-    background-color: #67ee87; /* Green for approved */
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
   }
-  
-  .timesheet-card.rejected {
-    background-color: #ff6978; /* Red for rejected */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .user-view {
+    flex-direction: column;
+
+    .user-info,
+    .vacation-request,
+    .vacation-days-list {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
   }
+}
+
+.timesheet-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Additional styles for approved and rejected classes */
+.timesheet-card.approved {
+  background-color: #67ee87;
+}
+
+.timesheet-card.rejected {
+  background-color: #ff6978;
+}
+
+/* Style the content and edit form within the card */
+.timesheet-content,
+.edit-ts {
+  width: 100%;
+}
+
+.edit-ts {
+  padding-top: 10px;
+}
+
+.timesheet-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Specific styles for the left section containing user info and timesheets list */
+.left-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}

@@ -6,9 +6,9 @@ import { UserRole } from '../models/enums/user-role.enum';
 @Injectable({
   providedIn: 'root'
 })
-export class ManagerAccessGuardService implements CanActivate{
+export class ManagerAccessGuardService implements CanActivate {
 
-  constructor(private authService: AuthServiceService, private router: Router) {}
+  constructor(private authService: AuthServiceService, private router: Router) { }
 
   canActivate(): boolean {
     if (this.authService.getRole() === UserRole.Manager) {

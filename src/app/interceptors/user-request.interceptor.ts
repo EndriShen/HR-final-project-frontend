@@ -10,11 +10,11 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class UserRequestInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const  newReq = request.clone({
-      setHeaders: {'content-type': 'application/json'}
+    const newReq = request.clone({
+      setHeaders: { 'content-type': 'application/json' }
     })
     return next.handle(newReq);
   }

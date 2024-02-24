@@ -1,58 +1,56 @@
-<!-- <p>user-view works!</p>
+<header>
+  <h1>Welcome to your User Dashboard!</h1>
+</header>
 
-<ng-container *ngIf="authService.isLoggedIn()">
-    <button class="logout-button" (click)="logout()">Log Out</button>
-  </ng-container> -->
+<div class="user-view">
+  <div class="user-info">
+    <h2 style="margin-bottom: 110px;">User Information</h2>
+    <p>First Name: {{ user.firstName }}</p>
+    <p>Last Name: {{ user.lastName }}</p>
+    <p>Days Left: {{ user.daysOff }} / 20</p>
+  </div>
 
-  <div class="user-view">
-    <div class="user-info">
-      <h2>User Information</h2>
-      <p>First Name: {{ user.firstName }}</p>
-      <p>Last Name: {{ user.lastName }}</p>
-      <p>Days Left: {{ user.daysOff }} / 20</p>
-    </div>
-  
-    <div class="vacation-request">
-      <h2 class="title">Request Timesheet</h2>
-      <form (ngSubmit)="onSubmit()">
-        <label for="startDay">Start Day:</label>
-        <input type="date" id="startDay" name="startDay" [(ngModel)]="vacationRequest.fromDate" required>
-  
-        <label for="endDay">End Day:</label>
-        <input type="date" id="endDay" name="endDay" [(ngModel)]="vacationRequest.toDate" required>
-  
-        <label for="note">Note:</label>
-        <textarea id="note" name="note" [(ngModel)]="vacationRequest.note"></textarea>
-  
-        <button type="submit">Request</button>
-        <div *ngIf="errorMessage" class="alert alert-danger" style="margin-top: 5px;">
-          {{ errorMessage }}
+  <div class="vacation-request">
+    <h2 class="title">Request Timesheet</h2>
+    <form (ngSubmit)="onSubmit()">
+      <label for="startDay">Start Day:</label>
+      <input type="date" id="startDay" name="startDay" [(ngModel)]="timesheetRequests.fromDate" required>
+
+      <label for="endDay">End Day:</label>
+      <input type="date" id="endDay" name="endDay" [(ngModel)]="timesheetRequests.toDate" required>
+
+      <label for="note">Note:</label>
+      <textarea id="note" name="note" [(ngModel)]="timesheetRequests.note"></textarea>
+
+      <button type="submit" class="btn">Request</button>
+      <div *ngIf="errorMessage" class="alert alert-danger" style="margin-top: 5px;">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+
+  <div class="vacation-days-list">
+    <h2 class="title">Applied Timesheets</h2>
+    <div *ngFor="let ts of timesheets; let i = index" class="timesheet-card"
+      [ngClass]="{'approved': ts.status === statusType.Approved, 'rejected': ts.status === statusType.Rejected}">
+      <div class="timesheet-content">
+        <div>
+          {{ ts.fromDate | date }} - {{ ts.toDate | date }}:
+          <span class="status"><strong>{{ ts.status }}</strong></span>
         </div>
-      </form>
-    </div>
+        <button *ngIf="ts.status === 'PENDING'" (click)="startEdit(ts, i)" style="margin-left: 10px;">Edit</button>
+      </div>
 
-    <div class="vacation-days-list">
-      <h2 class="title">Applied Timesheets</h2>
-        <div *ngFor="let vacation of vacations; let i = index" class="timesheet-card"
-        [ngClass]="{'approved': vacation.status === statusType.Approved, 'rejected': vacation.status === statusType.Rejected}">
-          <div class="timesheet-content">
-            {{ vacation.fromDate | date }} - {{ vacation.toDate | date }}: 
-            <span class="status"><strong>{{ vacation.status }}</strong></span>
-          </div>
-            <button *ngIf="vacation.status === 'PENDING'" (click)="startEdit(vacation, i)" style="margin-left: 10px;">Edit</button>
-            
-            <!-- Edit form appears right below the timesheet being edited -->
-            <div *ngIf="editableTimesheetIndex === i">
-              <form (ngSubmit)="onEditSubmit(vacation)">
-                <input type="date" [(ngModel)]="vacation.fromDate" name="fromDate{{i}}">
-                <input type="date" [(ngModel)]="vacation.toDate" name="toDate{{i}}">
-                <textarea [(ngModel)]="vacation.note" name="note{{i}}"></textarea>
-                <button type="submit">Save Changes</button>
-                <button type="button" class="btn-delete" (click)="deleteTimesheet(vacation.id!, i)">Delete Timesheet</button>
-                <button type="button" (click)="cancelEdit()">Cancel</button>
-              </form>
-            </div>
-          </div>
+      <div *ngIf="editableTimesheetIndex === i" class="edit-ts">
+        <form (ngSubmit)="onEditSubmit(ts)">
+          <input type="date" [(ngModel)]="ts.fromDate" name="fromDate{{i}}">
+          <input type="date" [(ngModel)]="ts.toDate" name="toDate{{i}}">
+          <textarea [(ngModel)]="ts.note" name="note{{i}}"></textarea>
+          <button type="submit" class="btn">Save Changes</button>
+          <button type="button" class="btn-delete" (click)="deleteTimesheet(ts.id!, i)">Delete Timesheet</button>
+          <button type="button" class="btn" (click)="cancelEdit()">Cancel</button>
+        </form>
+      </div>
     </div>
   </div>
-  
+</div>

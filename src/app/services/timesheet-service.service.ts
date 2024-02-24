@@ -12,7 +12,7 @@ import { TimesheetResponse } from '../models/timesheet-models/timesheetResponse.
 })
 export class TimesheetServiceService {
 
-  private baseUrl = 'http://localhost:8080/api/timesheet'; 
+  private baseUrl = 'http://localhost:8080/api/timesheet';
 
   constructor(private http: HttpClient) { }
 

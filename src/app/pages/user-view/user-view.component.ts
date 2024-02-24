@@ -16,8 +16,8 @@ import { TimesheetServiceService } from 'src/app/services/timesheet-service.serv
 })
 export class UserViewComponent implements OnInit {
   user: any;
-  vacationRequest: SaveTimesheet = { fromDate: '', toDate: '', note: '' };
-  vacations: Timesheet[] = [];
+  timesheetRequests: SaveTimesheet = { fromDate: '', toDate: '', note: '' };
+  timesheets: Timesheet[] = [];
   isEditing = false;
   editableTimesheet: Timesheet | null = null;
   editableTimesheetIndex: number | null = null;
@@ -28,11 +28,11 @@ export class UserViewComponent implements OnInit {
     private timesheetService: TimesheetServiceService,
     private router: Router,
     private alerts: NgAlertBoxComponent
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadUserData();
-    this.loadVacationRequests();
+    this.loadTimesheetRequests();
   }
 
   loadUserData(): void {
@@ -44,33 +44,31 @@ export class UserViewComponent implements OnInit {
     }
   }
 
-  loadVacationRequests(): void {
+  loadTimesheetRequests(): void {
     const userId = this.user?.id;
     if (userId) {
-      this.timesheetService.getTimeSheetsByUserId(userId)
-        .pipe(
-          tap(timesheets => {
-            this.vacations = timesheets;
-          }),
-          catchError((error) => {
-            console.error('Error loading timesheets:', error);
-            return of();
-          })
-        )
-        .subscribe();
+      this.timesheetService.getTimeSheetsByUserId(userId).pipe(
+        tap(timesheets => {
+          this.timesheets = timesheets;
+        }),
+        catchError((error) => {
+          console.error('Error loading timesheets:', error);
+          return of();
+        })
+      ).subscribe();
     }
   }
 
   onSubmit(): void {
-    if (this.vacationRequest.fromDate && this.vacationRequest.toDate) {
+    if (this.timesheetRequests.fromDate && this.timesheetRequests.toDate) {
       const timesheetRequest: SaveTimesheetRequest = {
         saveTimesheet: {
-          fromDate: this.formatDate(this.vacationRequest.fromDate),
-          toDate: this.formatDate(this.vacationRequest.toDate),
-          note: this.vacationRequest.note
+          fromDate: this.formatDate(this.timesheetRequests.fromDate),
+          toDate: this.formatDate(this.timesheetRequests.toDate),
+          note: this.timesheetRequests.note
         },
-        user:{
-        id: this.user.id
+        user: {
+          id: this.user.id
         }
       };
 
@@ -79,7 +77,7 @@ export class UserViewComponent implements OnInit {
           console.log('New timesheet created:', newTimesheet);
           this.errorMessage = null;
           this.alerts.dialog('S', 'New Timesheet Request Created!')
-          this.loadVacationRequests();
+          this.loadTimesheetRequests();
         }),
         catchError(error => {
           console.error('Error creating timesheet:', error);
@@ -94,8 +92,8 @@ export class UserViewComponent implements OnInit {
     return new Date(dateString).toISOString().split('T')[0];
   }
 
-  editTimesheet(vacation: Timesheet): void {
-    this.editableTimesheet = { ...vacation }; // Create a copy for editing
+  editTimesheet(timesheet: Timesheet): void {
+    this.editableTimesheet = { ...timesheet }; // Create a copy for editing
     this.isEditing = true;
   }
 
@@ -103,39 +101,34 @@ export class UserViewComponent implements OnInit {
     const isConfirmed = window.confirm('Are you sure you want to delete this timesheet?');
 
     if (isConfirmed) {
-    this.timesheetService.deleteTimesheet(id).pipe(
+      this.timesheetService.deleteTimesheet(id).pipe(
         tap(() => {
           console.log('Timesheet deleted successfully');
-          this.vacations.splice(index, 1); // Remove the timesheet from the list
+          this.timesheets.splice(index, 1); // Remove the timesheet from the list
           this.editableTimesheetIndex = null; // Reset the editable index
-          this.loadVacationRequests();
+          this.loadTimesheetRequests();
         }),
         catchError(error => {
           console.error('Error deleting timesheet:', error);
           return of();
         })
-      )
-      .subscribe();
+      ).subscribe();
     }
   }
 
   onEditSubmit(vacation: Timesheet): void {
     if (vacation && vacation.id) {
-      this.timesheetService.updateTimesheetUser(vacation.id, vacation)
-        .pipe(
-          tap(updatedTimesheet => {
-            this.vacations[this.editableTimesheetIndex!] = updatedTimesheet;
-            this.editableTimesheetIndex = null; // Reset the editable index
-            // Avoid using window.location.reload() in SPA (Single Page Applications)
-            this.loadVacationRequests();
-          }),
-          catchError(error => {
-            console.error('Error updating timesheet:', error);
-            // Handle the error by displaying a message to the user, logging, etc.
-            return of();
-          })
-        )
-        .subscribe();
+      this.timesheetService.updateTimesheetUser(vacation.id, vacation).pipe(
+        tap(updatedTimesheet => {
+          this.timesheets[this.editableTimesheetIndex!] = updatedTimesheet;
+          this.editableTimesheetIndex = null; // Reset the editable index
+          this.loadTimesheetRequests();
+        }),
+        catchError(error => {
+          console.error('Error updating timesheet:', error);
+          return of();
+        })
+      ).subscribe();
     }
   }
 
@@ -145,6 +138,6 @@ export class UserViewComponent implements OnInit {
 
   cancelEdit(): void {
     this.editableTimesheetIndex = null;
-    this.loadVacationRequests();
+    this.loadTimesheetRequests();
   }
 }
