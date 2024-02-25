@@ -22,6 +22,8 @@ export class ManagerEditViewComponent implements OnInit {
   currentUser = localStorage.getItem('currentUser');
   managerUsername = this.currentUser ? JSON.parse(this.currentUser).username : null;
   managerId = this.currentUser ? JSON.parse(this.currentUser).id : null;
+  selectedTimesheetId: number | null = null;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -111,5 +113,9 @@ export class ManagerEditViewComponent implements OnInit {
         throw error; // Rethrow or handle as needed
       })
     ).subscribe();
+  }
+
+  toggleNoteDisplay(timesheetId: number): void {
+    this.selectedTimesheetId = this.selectedTimesheetId === timesheetId ? null : timesheetId;
   }
 }

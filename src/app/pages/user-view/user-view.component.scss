@@ -10,7 +10,7 @@ header {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  gap: 5px;
+  gap: 1px;
 
   .user-info {
     text-align: center;
@@ -103,7 +103,7 @@ header {
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #f9f9f9;
+  background-color: #ececec;
 }
 
 /* Additional styles for approved and rejected classes */
@@ -137,4 +137,19 @@ header {
   flex-direction: column;
   gap: 20px;
   flex: 1;
+}
+
+.edit-btn {
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #949494;
+  color: white;
+  padding: 5px 7px;
+}
+
+.edit-btn:hover {
+  background-color: #797979;
+  transition: background-color 0.3s;
 }

@@ -1,4 +1,5 @@
 import { StatusType } from "../enums/status-type.enum";
+import { User } from "../user-models/user.model";
 
 export class Timesheet {
     id?: number;
@@ -10,5 +11,6 @@ export class Timesheet {
     createdAt?: string;
     createdBy?: string;
     modifiedAt?: string;
-    modifiedBy?: string;                                
+    modifiedBy?: string;    
+    user?: User;                           
 }

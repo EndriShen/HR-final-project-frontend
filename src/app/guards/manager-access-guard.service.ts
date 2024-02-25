@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, CanActivateFn, Router } from '@angular/router';
 import { UserRole } from '../models/enums/user-role.enum';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ManagerAccessGuardService implements CanActivate {
+export class ManagerAccessGuardService {
 
   constructor(private authService: AuthServiceService, private router: Router) { }
 
@@ -18,4 +18,8 @@ export class ManagerAccessGuardService implements CanActivate {
       return false;
     }
   }
+}
+
+export const ManagerAccess: CanActivateFn = (): boolean => {
+  return inject(ManagerAccessGuardService).canActivate();
 }

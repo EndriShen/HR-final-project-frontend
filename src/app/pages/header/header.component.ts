@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserRole } from 'src/app/models/enums/user-role.enum';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
@@ -21,6 +22,24 @@ export class HeaderComponent {
 
     if (isConfirmed) {
       this.logout();
+    }
+  }
+
+  redirectToMain(): void {
+    // Retrieve the user data from local storage
+    const userData = localStorage.getItem('currentUser');
+    if (userData) {
+      const user = JSON.parse(userData);
+
+      if (user.role === UserRole.User) {
+        this.router.navigate(['/user-view']);
+      } else if (user.role === UserRole.Manager) {
+        this.router.navigate(['/manager-list']);
+      } else {
+        this.router.navigate(['/']);
+      }
+    } else {
+      this.router.navigate(['/login']);
     }
   }
 }

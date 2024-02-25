@@ -6,7 +6,12 @@ header {
 }
 
 .form-group {
-  margin-bottom: 10px;
+  margin-bottom: 25px;
+}
+
+label {
+  margin-left: 3px;
+  font-weight: 500;
 }
 
 .user-form .button-container {
@@ -34,7 +39,7 @@ h3 {
 
 .user-form,
 .user-timesheets {
-  flex: 1;
+  flex-basis: 50%;
   padding: 20px;
 }
 
@@ -51,18 +56,36 @@ h3 {
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #f9f9f9;
+  background-color: #ececec;
 }
 
 .timesheet-content {
   display: flex;
   align-items: center;
   gap: 15px;
+  margin-inline: 10px;
+  justify-content: space-between;
+}
+.timesheet-note p b  {
+  font-weight: 500;
+}
+.timesheet-note {
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
 
 .timesheet-actions {
   display: flex;
   gap: 10px;
+}
+
+.btn .btn-sucess {
+  margin-top: 20px;
+}
+
+.btn-submit {
+  margin-top: 20px;
 }
 
 .btn-approve,

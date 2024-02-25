@@ -38,7 +38,7 @@
           {{ ts.fromDate | date }} - {{ ts.toDate | date }}:
           <span class="status"><strong>{{ ts.status }}</strong></span>
         </div>
-        <button *ngIf="ts.status === 'PENDING'" (click)="startEdit(ts, i)" style="margin-left: 10px;">Edit</button>
+        <button *ngIf="ts.status === 'PENDING'" (click)="startEdit(ts, i)" class="edit-btn">Edit</button>
       </div>
 
       <div *ngIf="editableTimesheetIndex === i" class="edit-ts">

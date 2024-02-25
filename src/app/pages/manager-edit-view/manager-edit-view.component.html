@@ -21,7 +21,7 @@
       </div>
     
       <div class="button-container">
-        <button type="submit" class="btn btn-success">Save Changes</button>
+        <button type="submit" class="btn btn-success btn-submit">Save Changes</button>
       </div>
     </form>    
   </div>
@@ -29,12 +29,17 @@
   <div class="user-imesheets">
     <h3 class="ts-header">Applied Timesheets</h3>
     <div *ngFor="let timesheet of userTimesheets" class="timesheet-card"
-    [ngClass]="{'approved': timesheet.status === statusType.Approved, 'rejected': timesheet.status === statusType.Rejected}">
+    [ngClass]="{'approved': timesheet.status === statusType.Approved, 'rejected': timesheet.status === statusType.Rejected}" (click)="toggleNoteDisplay(timesheet.id!)">
       <div class="timesheet-content">
-        <span>{{ timesheet.fromDate | date }} - {{ timesheet.toDate | date}}</span>
-        <span>Status: <strong>{{timesheet.status}}</strong></span>
+        <div>
+          <span>{{ timesheet.fromDate | date }} - {{ timesheet.toDate | date}}</span>
+          <span style="margin-left: 15px;">Status: <strong>{{timesheet.status}}</strong></span>
+          <div *ngIf="selectedTimesheetId === timesheet.id" class="timesheet-note">
+            <p>Note: {{ timesheet.note }}</p>
+          </div>
+        </div>
       </div>
-      <div *ngIf="timesheet.status === statusType.Pending" class="timesheet-actions">
+      <div *ngIf="timesheet.status === statusType.Pending"  class="timesheet-actions">
         <button class="btn-approve" (click)="updateTimesheetStatus(timesheet.id!, statusType.Approved)">Approve</button>
         <button class="btn-reject"  (click)="updateTimesheetStatus(timesheet.id!, statusType.Rejected)">Reject</button>
       </div>

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="d-flex align-items-center" style="flex-grow: 1;">
-        <img src="assets/hr-project-logo.png" alt="HR Project Logo" style="height: 40px; margin-left: 10px;">
-        <p class="mb-0" style="margin-left: 5px;">DayOff Track</p>
+        <img src="assets/hr-project-logo.png" alt="HR Project Logo" (click)="redirectToMain()">
+        <p class="mb-0" style="margin-left: 10px;">DayOff Track</p>
     </div>
 
     <ng-container *ngIf="authService.isLoggedIn()">
