@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, tap } from 'rxjs';
+import { NgAlertBoxComponent } from 'ng-alert-box-popup';
+import { catchError, of, tap } from 'rxjs';
 import { StatusType } from 'src/app/models/enums/status-type.enum';
 import { Timesheet } from 'src/app/models/timesheet-models/timesheet.model';
 import { UpdateTimesheetManager } from 'src/app/models/timesheet-models/updateTimesheetManager.model';
@@ -30,7 +31,8 @@ export class ManagerEditViewComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private userService: UserServiceService,
-    private timesheetService: TimesheetServiceService) { }
+    private timesheetService: TimesheetServiceService,
+    private alerts: NgAlertBoxComponent) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(
@@ -86,8 +88,9 @@ export class ManagerEditViewComponent implements OnInit {
             this.router.navigate(['/manager-list']);
           }),
           catchError((error) => {
-            console.error('Error updating user information.');
-            throw error;
+            console.error('Error updating user information.', error);
+            this.alerts.dialog('E', 'An error occurred while updating user information!');
+            return of();
           })
         ).subscribe();
       }
@@ -108,9 +111,9 @@ export class ManagerEditViewComponent implements OnInit {
         this.loadUserTimesheets(this.userId);
       }),
       catchError((error) => {
-        console.error('Error updating timesheet status.');
-        // Optionally handle the error, e.g., by showing a user message
-        throw error; // Rethrow or handle as needed
+        console.error('Error updating timesheet status.', error);
+        this.alerts.dialog('E', 'An error occurred while updating timesheet status!');
+        return of();
       })
     ).subscribe();
   }

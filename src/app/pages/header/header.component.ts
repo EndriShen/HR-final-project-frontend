@@ -26,7 +26,6 @@ export class HeaderComponent {
   }
 
   redirectToMain(): void {
-    // Retrieve the user data from local storage
     const userData = localStorage.getItem('currentUser');
     if (userData) {
       const user = JSON.parse(userData);

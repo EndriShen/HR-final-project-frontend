@@ -22,6 +22,7 @@ export class UserViewComponent implements OnInit {
   editableTimesheet: Timesheet | null = null;
   editableTimesheetIndex: number | null = null;
   errorMessage: string | null = null;
+  errorMessage2: string | null = null;
   statusType = StatusType;
 
   constructor(
@@ -106,26 +107,31 @@ export class UserViewComponent implements OnInit {
           console.log('Timesheet deleted successfully');
           this.timesheets.splice(index, 1); // Remove the timesheet from the list
           this.editableTimesheetIndex = null; // Reset the editable index
+          this.alerts.dialog('S', 'Timesheet deleted successfully!');
           this.loadTimesheetRequests();
         }),
         catchError(error => {
           console.error('Error deleting timesheet:', error);
+          this.alerts.dialog('E', 'An error occurred while deleting timesheet!');
           return of();
         })
       ).subscribe();
     }
   }
 
-  onEditSubmit(vacation: Timesheet): void {
-    if (vacation && vacation.id) {
-      this.timesheetService.updateTimesheetUser(vacation.id, vacation).pipe(
+  onEditSubmit(timesheetReq: Timesheet): void {
+    if (timesheetReq && timesheetReq.id) {
+      this.timesheetService.updateTimesheetUser(timesheetReq.id, timesheetReq).pipe(
         tap(updatedTimesheet => {
-          this.timesheets[this.editableTimesheetIndex!] = updatedTimesheet;
+          this.timesheets[this.editableTimesheetIndex!] = updatedTimesheet.updateTimesheetRequest;
           this.editableTimesheetIndex = null; // Reset the editable index
+          this.errorMessage2 = null;
+          this.alerts.dialog('S', 'Timesheet updated successfully!');
           this.loadTimesheetRequests();
         }),
         catchError(error => {
           console.error('Error updating timesheet:', error);
+          this.errorMessage2 = error.error.errorMessage || 'An unexpected error occurred.';
           return of();
         })
       ).subscribe();

@@ -6,6 +6,7 @@ import { Observable, catchError, of } from 'rxjs';
 import { UpdateTimesheetUser } from '../models/timesheet-models/updateTimesheetUser.model';
 import { UpdateTimesheetManager } from '../models/timesheet-models/updateTimesheetManager.model';
 import { TimesheetResponse } from '../models/timesheet-models/timesheetResponse.model';
+import { updateTimesheetResponse } from '../models/timesheet-models/updateTimesheetResponse.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,8 @@ export class TimesheetServiceService {
     return this.http.post<TimesheetResponse>(`${this.baseUrl}/create`, timesheetRequest);
   }
 
-  updateTimesheetUser(id: number, timesheet: UpdateTimesheetUser): Observable<Timesheet> {
-    return this.http.patch<Timesheet>(`${this.baseUrl}/updateByUser/${id}`, timesheet).pipe(
-      catchError((error) => of(error))
-    );
+  updateTimesheetUser(id: number, timesheet: UpdateTimesheetUser): Observable<updateTimesheetResponse> {
+    return this.http.patch<updateTimesheetResponse>(`${this.baseUrl}/updateByUser/${id}`, timesheet);
   }
 
   updateTimesheetManager(id: number, timesheet: UpdateTimesheetManager): Observable<Timesheet> {
