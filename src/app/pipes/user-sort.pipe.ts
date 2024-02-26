@@ -10,9 +10,6 @@ import { TimesheetServiceService } from '../services/timesheet-service.service';
 })
 export class UserSortPipe implements PipeTransform {
 
-
-  constructor(private timesheetService: TimesheetServiceService) { }
-
   transform(users: User[], latestTimesheetDates: Map<number, string>, ascending: boolean | undefined): User[] {
     if (!users) return [];
 
