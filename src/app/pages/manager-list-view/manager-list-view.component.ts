@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgAlertBoxComponent } from 'ng-alert-box-popup';
-import { filter, of, switchMap, tap } from 'rxjs';
+import { Observable, filter, forkJoin, map, of, switchMap, tap } from 'rxjs';
 import { StatusType } from 'src/app/models/enums/status-type.enum';
 import { Timesheet } from 'src/app/models/timesheet-models/timesheet.model';
 import { User } from 'src/app/models/user-models/user.model';
@@ -17,6 +17,9 @@ export class ManagerListViewComponent implements OnInit {
   users: User[] = [];
   pendingStatusMap = new Map<number, boolean>();
   searchTerm: string = '';
+  latestTimesheetDates: Map<number, string> = new Map();
+  ascending: boolean | undefined;
+  sortOrder: string = 'default';
 
   constructor(
     private userService: UserServiceService,
@@ -26,21 +29,68 @@ export class ManagerListViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchUsers();
+    this.fetchUsersAndTimesheets();
   }
 
-  fetchUsers(): void {
-    this.userService.getAllUsers().pipe(
-      tap(users => {
-        this.users = users;
-        users.forEach(user => {
-          if (user.id) {
-            this.checkAndSetPendingStatus(user.id);
+  setSortOrder() {
+    if(this.sortOrder === 'default'){
+      this.ascending = undefined;
+    } else {
+      if (this.sortOrder === 'asc'){
+      this.ascending = true;
+      } else {
+        this.ascending = false;
+      }
+    }
+  }
+
+  fetchUsersAndTimesheets(): void {
+    this.userService.getAllUsers().subscribe(users => {
+      this.users = users;
+      users.forEach(user => {
+        if (user.id) {
+          this.checkAndSetPendingStatus(user.id);
+        }
+      });
+      // Fetch the latest timesheet for each user
+      const timesheetRequests: Observable<Timesheet[]>[] = users.map(user =>
+        this.timesheetService.getTimeSheetsByUserId(user.id!)
+      );
+
+      forkJoin(timesheetRequests).subscribe(timesheetArrays => {
+        timesheetArrays.forEach((timesheets, index) => {
+          if (timesheets.length > 0) {
+            const latestTimesheet = timesheets.reduce((latest, current) => 
+              new Date(latest.createdAt!) > new Date(current.createdAt!) ? latest : current
+            );
+            this.latestTimesheetDates.set(users[index].id!, latestTimesheet.createdAt!);
           }
         });
-      })
-    ).subscribe();
+      });
+    });
   }
+
+  // sortUsersByLatestTimesheetDate(ascending: boolean = true): void {
+  //   this.users.sort((a, b) => {
+  //     const aDate = this.latestTimesheetDates.get(a.id!) || '';
+  //     const bDate = this.latestTimesheetDates.get(b.id!) || '';
+  //     return ascending ? new Date(aDate).getTime() - new Date(bDate).getTime() :
+  //                        new Date(bDate).getTime() - new Date(aDate).getTime();
+  //   });
+  // }
+
+  // fetchUsers(): void {
+  //   this.userService.getAllUsers().pipe(
+  //     tap(users => {
+  //       this.users = users;
+  //       users.forEach(user => {
+  //         if (user.id) {
+  //           this.checkAndSetPendingStatus(user.id);
+  //         }
+  //       });
+  //     })
+  //   ).subscribe();
+  // }
 
   checkAndSetPendingStatus(userId: number): void {
     this.timesheetService.getTimeSheetsByUserId(userId).subscribe(timesheets => {
@@ -58,7 +108,7 @@ export class ManagerListViewComponent implements OnInit {
       filter(confirmed => confirmed === true), // Proceed only if the user confirmed
       switchMap(() => this.userService.deleteUser(userId)),
       tap(() => this.alerts.dialog('S', 'User Deleted Successfully!')),
-      tap(() => this.fetchUsers())
+      tap(() => this.fetchUsersAndTimesheets())
     ).subscribe();
   }
 

@@ -7,6 +7,8 @@ header {
 
 .filterSec {
   margin-bottom: 20px;
+  justify-content: space-between;
+  display: flex;
 }
 
 .user-list {
@@ -53,3 +55,43 @@ header {
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
 }
+
+.sort-label, .sort-dropdown {
+  display: inline-flex; /* Makes the label and dropdown display inline */
+  margin-right: 10px; /* Optional: Adds some space between the label and dropdown */
+}
+
+// .sort-dropdown select {
+//   padding: 3px;
+//   padding-right: 20px;
+//   padding-left: 15px;
+//   border-radius: 4px;
+//   background-color: #6c757d;
+//   color: white;
+//   border: 1px solid #5a6268;
+//   text-align: center;
+//   transition: background-color 0.3s, color 0.3s;
+//   -webkit-appearance: none; /* Removes default styling provided by the browser */
+//   -moz-appearance: none; /* Removes default styling provided by the browser */
+//   appearance: none; /* Removes default styling provided by the browser */
+// }
+
+// .sort-dropdown select:hover {
+//  background-color: #5a6268;
+//  color: #f8f9fa;
+// }
+
+// /* To style the dropdown arrow */
+// .sort-dropdown {
+//   position: relative;
+// }
+
+// .sort-dropdown::after {
+//   content: '\25BC'; /* Unicode for downward arrow */
+//   position: absolute;
+//   right: 5px;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   color: white; /* Arrow color */
+//   pointer-events: none; /* Prevents the arrow from being clickable */
+// }
