@@ -1,8 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { User } from '../models/user-models/user.model';
-import { Timesheet } from '../models/timesheet-models/timesheet.model';
-import { Observable, forkJoin } from 'rxjs';
-import { TimesheetServiceService } from '../services/timesheet-service.service';
 
 @Pipe({
   name: 'userSort',

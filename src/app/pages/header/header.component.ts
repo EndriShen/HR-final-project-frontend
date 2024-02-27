@@ -38,7 +38,7 @@ export class HeaderComponent {
         this.router.navigate(['/']);
       }
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/welcome']);
     }
   }
 }

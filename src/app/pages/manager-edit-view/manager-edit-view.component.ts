@@ -6,7 +6,6 @@ import { catchError, of, tap } from 'rxjs';
 import { StatusType } from 'src/app/models/enums/status-type.enum';
 import { Timesheet } from 'src/app/models/timesheet-models/timesheet.model';
 import { UpdateTimesheetManager } from 'src/app/models/timesheet-models/updateTimesheetManager.model';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { TimesheetServiceService } from 'src/app/services/timesheet-service.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
 

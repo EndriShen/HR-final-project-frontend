@@ -10,7 +10,7 @@
     </div>
     <div class="sort-section">
       <div class="sort-label">
-        <p><strong>Sort Users:</strong></p>
+        <p><strong>Sort Users by:</strong></p>
       </div>
       <div class="sort-dropdown">
         <select [(ngModel)]="sortOrder" (ngModelChange)="setSortOrder()">
@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  
+
   <div *ngFor="let user of users | userFilter:searchTerm | userSort:latestTimesheetDates:ascending" class="card mb-3">
     <div class="card-body d-flex align-items-center justify-content-between">
       <div class="user-info">

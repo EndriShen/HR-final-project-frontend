@@ -21,7 +21,7 @@ export class AuthServiceService {
     const url = `${this.baseUrl}/user/login?username=${username}&password=${password}`;
     return this.http.get<User>(url).pipe(
       tap(user => {
-        if (user) { // Check if user is not null or undefined
+        if (user) {
           localStorage.setItem('currentUser', JSON.stringify(user));
         } else {
           console.log('User is null or undefined')

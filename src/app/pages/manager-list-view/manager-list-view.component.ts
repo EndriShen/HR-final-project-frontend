@@ -70,28 +70,6 @@ export class ManagerListViewComponent implements OnInit {
     });
   }
 
-  // sortUsersByLatestTimesheetDate(ascending: boolean = true): void {
-  //   this.users.sort((a, b) => {
-  //     const aDate = this.latestTimesheetDates.get(a.id!) || '';
-  //     const bDate = this.latestTimesheetDates.get(b.id!) || '';
-  //     return ascending ? new Date(aDate).getTime() - new Date(bDate).getTime() :
-  //                        new Date(bDate).getTime() - new Date(aDate).getTime();
-  //   });
-  // }
-
-  // fetchUsers(): void {
-  //   this.userService.getAllUsers().pipe(
-  //     tap(users => {
-  //       this.users = users;
-  //       users.forEach(user => {
-  //         if (user.id) {
-  //           this.checkAndSetPendingStatus(user.id);
-  //         }
-  //       });
-  //     })
-  //   ).subscribe();
-  // }
-
   checkAndSetPendingStatus(userId: number): void {
     this.timesheetService.getTimeSheetsByUserId(userId).subscribe(timesheets => {
       const hasPending = timesheets.some(ts => ts.status === StatusType.Pending);
@@ -110,9 +88,5 @@ export class ManagerListViewComponent implements OnInit {
       tap(() => this.alerts.dialog('S', 'User Deleted Successfully!')),
       tap(() => this.fetchUsersAndTimesheets())
     ).subscribe();
-  }
-
-  hasPendingTimesheet(user: User): boolean {
-    return user.timesheets?.some(ts => ts.status === StatusType.Pending) ?? false;
   }
 }

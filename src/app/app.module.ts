@@ -16,7 +16,9 @@ import { FooterComponent } from './pages/footer/footer.component';
 import { UserFilterPipe } from './pipes/user-filter.pipe';
 import { UserSortPipe } from './pipes/user-sort.pipe';
 import { UnknownUrlComponent } from './pages/unknown-url/unknown-url.component';
-import { NgAlertBoxModule } from 'node_modules/ng-alert-box-popup'
+import { NgAlertBoxModule } from 'node_modules/ng-alert-box-popup';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { WelcomePageComponent } from './pages/welcome-page/welcome-page.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { NgAlertBoxModule } from 'node_modules/ng-alert-box-popup'
     FooterComponent,
     UserFilterPipe,
     UserSortPipe,
-    UnknownUrlComponent
+    UnknownUrlComponent,
+    AboutUsComponent,
+    WelcomePageComponent
   ],
   imports: [
     BrowserModule,

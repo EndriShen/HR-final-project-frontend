@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgAlertBoxComponent, NgAlertBoxService } from 'ng-alert-box-popup';
+import { NgAlertBoxComponent } from 'ng-alert-box-popup';
 import { tap, catchError, of } from 'rxjs';
 import { StatusType } from 'src/app/models/enums/status-type.enum';
 import { SaveTimesheet } from 'src/app/models/timesheet-models/saveTimesheet.model';
 import { SaveTimesheetRequest } from 'src/app/models/timesheet-models/saveTimesheetRequest.model';
 import { Timesheet } from 'src/app/models/timesheet-models/timesheet.model';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
 import { TimesheetServiceService } from 'src/app/services/timesheet-service.service';
 
 @Component({
@@ -18,8 +17,6 @@ export class UserViewComponent implements OnInit {
   user: any;
   timesheetRequests: SaveTimesheet = { fromDate: '', toDate: '', note: '' };
   timesheets: Timesheet[] = [];
-  isEditing = false;
-  editableTimesheet: Timesheet | null = null;
   editableTimesheetIndex: number | null = null;
   errorMessage: string | null = null;
   errorMessage2: string | null = null;
@@ -91,11 +88,6 @@ export class UserViewComponent implements OnInit {
 
   private formatDate(dateString: string): string {
     return new Date(dateString).toISOString().split('T')[0];
-  }
-
-  editTimesheet(timesheet: Timesheet): void {
-    this.editableTimesheet = { ...timesheet }; // Create a copy for editing
-    this.isEditing = true;
   }
 
   deleteTimesheet(id: number, index: number): void {
